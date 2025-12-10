@@ -146,3 +146,29 @@ Restricciones importantes:
 No se debe permitir el acceso directo al PIN desde fuera de la clase
 El saldo no debería ser modificable directamente desde fuera de la clase
 Las retiradas de dinero deben estar protegidas por verificación de PIN"""
+
+class CuentaBancaria:
+    def __init__(self, saldo, pin):
+        self._saldo = saldo  # Atributo protegido
+        self.__pin = pin  # Atributo privado
+    def depositar(self, monto):
+        if monto > 0 : 
+            self._saldo += monto
+            print("deposito correcto")
+    def retirar(self, monto, pin):
+        if self.verificar_pin(pin):
+            self._saldo -= monto
+            print("retiro correcto")
+        
+    def consultar_saldo(self):
+        print("su saldo es: ", self._saldo)
+        
+    def verificar_pin(self, pin):
+        if pin == self.__pin:
+            return True
+        
+cuenta1 = CuentaBancaria(1000, "1234")
+cuenta1.consultar_saldo()
+cuenta1.depositar(500)
+cuenta1.retirar(200, "1234")
+cuenta1.consultar_saldo()
